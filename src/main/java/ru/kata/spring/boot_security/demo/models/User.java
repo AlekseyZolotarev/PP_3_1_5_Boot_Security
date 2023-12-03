@@ -1,57 +1,43 @@
 package ru.kata.spring.boot_security.demo.models;
 
-
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Collection;
+import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User implements UserDetails {
-
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(name = "name")
-    private String name;
-
+    private Long user_id;
+    @Column(unique = true)
+    private String username;
+    @Column
     private String password;
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private List<Role> roles;
 
     public User() {
     }
 
-    public User(String name) {
-        this.name = name;
+    public Long getUser_id() {
+        return user_id;
     }
 
-    public int getId() {
-        return id;
+    public void setId(Long id) {
+        this.user_id = id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String name) {
+        this.username = name;
     }
 
     public void setPassword(String password) {
@@ -67,18 +53,13 @@ public class User implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
-    }
-
-    @Override
     public String getPassword() {
         return password;
     }
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
 
     @Override
@@ -97,7 +78,26 @@ public class User implements UserDetails {
     }
 
     @Override
+    public List<Role> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return user_id.equals(user.user_id) &&
+                username.equals(user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user_id, username);
     }
 }

@@ -5,14 +5,25 @@
     <title>New user</title>
 </head>
 <body>
-
-<form th:method="POST" th:action="@{/users}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin}" th:object="${user}">
     <label for="name">Enter name</label>
-    <input type="text" th:field="*{name}" id="name">
+    <input type="text" th:field="*{username}" id="name">
     <br/>
+    <label for="password">Enter password</label>
+    <input type="text" th:field="*{password}" id="password">
+    <br/>
+    <div>
+        <label for="roles">Roles:</label>
+        <select id="roles" th:field="*{roles}" size="2" multiple="multiple">
+            <option th:each="oneRole : ${roles}"
+                    th:value="${{oneRole}}"
+                    th:text="${oneRole.getRole()}">
+            </option>
+        </select>
+    </div>
     <input type="submit" value="Create!"/>
-    <p th:if="${#fields.hasErrors('name')}" th:errorclass="errorNewUser" th:errors="*{name}"></p>
+    <p th:if="${#fields.hasErrors('username')}" th:errorclass="errorNewUser" th:errors="*{username}"></p>
 </form>
-<a th:href="@{/users}" th:text="Users"></a>
+<a th:href="@{/admin}" th:text="Users"></a>
 </body>
 </html>
