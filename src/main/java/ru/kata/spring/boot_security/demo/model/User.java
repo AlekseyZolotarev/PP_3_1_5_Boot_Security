@@ -1,10 +1,19 @@
-package ru.kata.spring.boot_security.demo.models;
+package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -23,7 +32,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
@@ -44,11 +53,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -78,7 +87,7 @@ public class User implements UserDetails {
     }
 
     @Override
-    public List<Role> getAuthorities() {
+    public Set<Role> getAuthorities() {
         return getRoles();
     }
 
