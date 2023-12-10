@@ -2,14 +2,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example</title>
+    <title>User page!</title>
 </head>
 <body>
 <h1>User, welcome spring boot security page!</h1>
 <div>
     <p th:text="User">VALUE</p>
+    <p th:text="'Id: ' + ${user.getId()}">VALUE</p>
     <p th:text="'Name: ' + ${user.getUsername()}">VALUE</p>
     <p th:text="'Password: ' + ${user.getPassword()}">VALUE</p>
+    <div>
+        <label for="roles">Roles:</label>
+        <a id="roles" th:field="*{user}" size="2" multiple="multiple">
+            <p th:each="oneRole : ${user.getRoles()}"
+               th:value="${{oneRole}}"
+               th:text="${oneRole.getRoleName()}">
+            </p>
+        </a>
+    </div>
 </div>
 <div>
     <input style="color:black;" type="button" value="Logout" onclick="window.location.href='/logout'">

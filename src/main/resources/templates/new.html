@@ -17,7 +17,7 @@
         <select id="roles" th:field="*{roles}" size="2" multiple="multiple">
             <option th:each="oneRole : ${roles}"
                     th:value="${{oneRole}}"
-                    th:text="${oneRole.getRole()}">
+                    th:text="${oneRole.getRoleName()}">
             </option>
         </select>
     </div>

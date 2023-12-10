@@ -6,7 +6,7 @@
 </head>
 <body>
 <p th:text="Edit_user">VALUE</p>
-<form th:method="POST" th:action="@{/admin/change/id(id=${user.getUser_id()})}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/change/id(id=${user.getId()})}" th:object="${user}">
     <label for="name">Enter name</label>
     <input type="text" th:field="*{username}" id="name"/>
     <br/>
@@ -18,7 +18,7 @@
         <select id="roles" th:field="*{roles}" size="2" multiple="multiple">
             <option th:each="oneRole : ${allRoles}"
                     th:value="${{oneRole}}"
-                    th:text="${oneRole.getRole()}">
+                    th:text="${oneRole.getRoleName()}">
             </option>
         </select>
     </div>

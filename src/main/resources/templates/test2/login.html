@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <!-- Bootstrap CSS -->
+        <link
+                crossorigin="anonymous"
+                href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                rel="stylesheet">
+        <link
+                href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css"
+                rel="stylesheet">
+
+        <title>Login page</title>
+
+    </head>
+
+
+    <body style="align-items: start; box-sizing: border-box">
+    <main class="w-100 form-signin">
+        <form method="post" name="form-signin" style="max-width: 330px;" th:action="@{/login}">
+            <h3 class="mb-3 font-weight-bold">Please sign in</h3>
+
+            <label class="sr-only" for="inputUsername">Email address</label>
+            <input autofocus=""
+                   class="form-control"
+                   id="inputUsername"
+                   name="username"
+                   placeholder="Email address"
+                   required="" type="text">
+
+            <label class="sr-only" for="inputPassword">Password</label>
+            <input class="form-control"
+                   id="inputPassword"
+                   name="password"
+                   placeholder="Password"
+                   required=""
+                   style="margin-bottom: 10px"
+                   type="password"
+            >
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+        </form>
+    </main>
+    </body>
+    </html>

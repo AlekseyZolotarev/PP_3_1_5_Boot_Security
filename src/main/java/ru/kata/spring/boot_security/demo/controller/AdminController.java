@@ -12,34 +12,35 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     private final UserService userService;
-
     private final RoleService roleService;
 
     @Autowired
-    public AdminController(
-            UserService userService,
-            RoleService roleService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
 
     @GetMapping
-    public String getAllUsers(Model model) {
-        model.addAttribute("users", userService.getUsersList());
-        return "admin";
+    public String getAllUsers(Model model, Principal principal) {
+        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("user", userService.findByName(principal.getName()));
+        model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("newUser", new User());
+        return "/admin";
     }
 
     @GetMapping("/id")
     public String show(@RequestParam(value = "id", required = false, defaultValue = "0")
                        Long id,
                        Model model) {
-        model.addAttribute("user", userService.findUserById(id));
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "/show";
+        model.addAttribute("user", userService.getUserById(id));
+        return "/user";
     }
 
     @GetMapping("/new")
@@ -58,27 +59,29 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/change/id")
+    @GetMapping("change/id")
     public String changeUser(
             Model model,
             @RequestParam(value = "id", required = false, defaultValue = "0") Long id) {
-        model.addAttribute("user", userService.findUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("allRoles", roleService.getAllRoles());
         return "/change";
     }
 
     @PostMapping("change/id")
-    public String change(User user, BindingResult result) {
+    public String change(User user,
+                         BindingResult result,
+                         @RequestParam(value = "id", required = false, defaultValue = "0") Long id) {
         if (result.hasErrors()) {
-            return "/change";
+            return "/admin";
         }
-        userService.editUser(user);
+        userService.updateUser(id, user);
         return "redirect:/admin";
     }
 
-    @PostMapping("delete/id")
+    @PostMapping("/id")
     public String deleteUser(@RequestParam(value = "id", required = false, defaultValue = "0") Long id) {
-        userService.deleteUser(id);
+        userService.deleteUserById(id);
         return "redirect:/admin";
     }
 }

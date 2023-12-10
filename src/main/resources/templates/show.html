@@ -14,7 +14,7 @@
     <a id="roles" th:field="*{user}" size="2" multiple="multiple">
         <p th:each="oneRole : ${user.getRoles()}"
            th:value="${{oneRole}}"
-           th:text="${oneRole.getRole()}">
+           th:text="${oneRole.getRoleName()}">
         </p>
     </a>
 </div>
