@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
-import javax.persistence.NonUniqueResultException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByUsername(user.getUsername()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
-        } else throw new NonUniqueResultException("username is exist");
+        } else throw new EntityNotFoundException("username is exist");
 
     }
 
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         User existUser = userRepository.getById(id);
         System.out.println(updateUser.getPassword());
         if (!updateUser.getUsername().equals(existUser.getUsername()) && userRepository.findByUsername(updateUser.getUsername()) != null) {
-            throw new NonUniqueResultException("username is exist");
+            throw new EntityNotFoundException("username is exist");
         }
         if (updateUser.getRoles() == null) {
             updateUser.setRoles(existUser.getRoles());
