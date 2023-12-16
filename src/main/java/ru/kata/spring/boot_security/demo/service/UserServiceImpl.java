@@ -22,12 +22,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+        if (users != null) {
+            return userRepository.findAll();
+        } else {
+            throw new EntityNotFoundException("getAllUsers no User");
+        }
     }
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.getById(id);
+        User user = userRepository.getById(id);
+        if (user != null) {
+            return user;
+        } else {
+            throw new EntityNotFoundException("getUserById no User");
+        }
     }
 
     @Override
@@ -37,7 +47,6 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
         } else throw new EntityNotFoundException("username is exist");
-
     }
 
     @Override
@@ -75,12 +84,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByName(String name) {
-        return userRepository.findByUsername(name);
+        User user = userRepository.findByUsername(name);
+        if (user != null) {
+            return userRepository.findByUsername(name);
+        } else {
+            throw new EntityNotFoundException("findByName no User");
+        }
     }
 
     @Override
     @Transactional
     public void deleteUserById(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.getById(id);
+        if (user != null) {
+            userRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("deleteUser no User");
+        }
     }
 }

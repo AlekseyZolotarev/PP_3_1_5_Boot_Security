@@ -309,7 +309,7 @@
                                                     required style="height: 50px; width: 300px; margin: 0 auto">
                                                 <option name="roles"
                                                         th:each="role: ${roles}"
-                                                        th:text="${role.getRoleName()}"
+                                                        th:text="${role.getRoleName().replace('ROLE_', '') + ' '}"
                                                         th:value="${role.getId()}">
                                                 </option>
                                             </select>

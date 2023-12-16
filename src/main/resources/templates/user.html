@@ -41,12 +41,15 @@
                  class="nav flex-column nav-pills me-3 mw-100 w-100 p-0"
                  id="v-pills-tab"
                  role="tablist">
-                <a aria-controls="v-pills-home"
+                <a
+                   aria-controls="v-pills-home"
                    aria-selected="false"
                    class="nav-link"
                    href="/admin"
                    id="v-pills-home-tab"
-                   role="tab" sec:authorize="hasAuthority('ROLE_ADMIN')">Admin
+                   role="tab"
+                   sec:authorize ="hasAuthority('ROLE_ADMIN')"
+                >Admin
                 </a>
                 <a aria-controls="v-pills-profile" aria-selected="true"
                    class="nav-link active" href="#" id="v-pills-profile-tab"
