@@ -62,24 +62,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User updateUser(Long id, User updateUser) { //Save user with this id
-        updateUser.setId(id);
-        User existUser = userRepository.getById(id);
-        System.out.println(updateUser.getPassword());
-        if (!updateUser.getUsername().equals(existUser.getUsername()) && userRepository.findByUsername(updateUser.getUsername()) != null) {
-            throw new EntityNotFoundException("username is exist");
+    public void updateUser(User user) {
+        if (!(user.getPassword().equals(userRepository.getById(user.getId()).getPassword()))) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        if (updateUser.getRoles() == null) {
-            updateUser.setRoles(existUser.getRoles());
-        }
-        if (updateUser.getPassword() == null) {
-            updateUser.setPassword(existUser.getPassword());
-            return userRepository.save(updateUser);
-        }
-        if (!userRepository.existsById(id) || !updateUser.getPassword().equals(existUser.getPassword())) {
-            updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
-        }
-        return userRepository.save(updateUser);
+        userRepository.save(user);
     }
 
     @Override

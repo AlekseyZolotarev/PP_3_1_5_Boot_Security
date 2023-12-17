@@ -13,7 +13,7 @@ public interface UserService {
 
     void addUserWOCheckName(User user);
 
-    User updateUser(Long id, User updateUser);
+    void updateUser(User updateUser);
 
     User findByName(String name);
 
