@@ -23,4 +23,5 @@ public class RestUserController {
         User user = userService.findByName(principal.getName());
         return ResponseEntity.ok(user);
     }
+
 }

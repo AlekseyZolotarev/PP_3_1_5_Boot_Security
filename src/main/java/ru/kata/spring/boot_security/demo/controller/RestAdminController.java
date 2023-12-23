@@ -28,7 +28,7 @@ public class RestAdminController {
         this.userService = userService;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<User>> restShowAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }

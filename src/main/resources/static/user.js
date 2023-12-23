@@ -1,12 +1,13 @@
 const userUrl = 'http://localhost:8080/restUser';
 
-
 function getUserPage() {
     fetch(userUrl).then(response => response.json()).then(user =>
         getInformationAboutUser(user))
 }
 
 function getInformationAboutUser(user) {
+    $('#nameCurrentUser').append(`<span>${user.username}</span>`)
+    $('#roleCurrentUser').append(`<span>${user.roles.map(r => r.roleName).join(' ')}</span>`)
 
     let result = '';
     result =

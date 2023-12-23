@@ -7,11 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -21,17 +18,8 @@ public class Role implements GrantedAuthority {
     @Column(name = "id")
     private Long id;
     private String roleName;
-    @Transient
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
 
     public Role() {
-    }
-
-    public Role(Long id, String roleName, Set<User> users) {
-        this.id = id;
-        this.roleName = roleName;
-        this.users = users;
     }
 
     public Role(Long id) {
@@ -47,24 +35,16 @@ public class Role implements GrantedAuthority {
         return id;
     }
 
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setRoleName(String role) {
-        this.roleName = role;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setRoleName(String role) {
+        this.roleName = role;
     }
 
     @Override
@@ -77,7 +57,7 @@ public class Role implements GrantedAuthority {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role1 = (Role) o;
-        return id == role1.id && Objects.equals(roleName, role1.roleName) && Objects.equals(users, role1.users);
+        return Objects.equals(id, role1.id) && Objects.equals(roleName, role1.roleName);
     }
 
     @Override

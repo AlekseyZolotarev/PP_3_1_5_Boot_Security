@@ -13,6 +13,7 @@ async function getAllUsers() {
 }
 
 function fillTable(users) {
+
     let result = '';
     for (let user of users) {
         result +=
@@ -42,7 +43,6 @@ function fillTable(users) {
     }
     document.getElementById('adminTableBody').innerHTML = result;
 }
-
 
 function editModal(id) {
     fetch(url + '/' + id, {
